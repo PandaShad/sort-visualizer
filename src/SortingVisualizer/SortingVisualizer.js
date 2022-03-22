@@ -1,10 +1,11 @@
 import React from 'react';
 import './SortingVisualizer.css';
 // import * as SortingAlgorithms from '../SortingAlgorithms/MergeSort.js';
-import {getMergeSortAnimations} from '../SortingAlgorithms/MergeSort.js';
+import {getMergeSortAnimations} from '/home/shad/TUTO/sort-visualizer-real/my-app/sort-visualizer/sort-visualizer/src/SortingAlgorithms/MergeSort.js';
 import {getBubbleSortAnimations} from '../SortingAlgorithms/BubbleSort.js';
 import {getInsertionSortAnimations} from '../SortingAlgorithms/InsertionSort.js';
 import {getQuickSortAnimations} from '../SortingAlgorithms/QuickSort.js';
+import {getHeapSortAnimations} from '../SortingAlgorithms/HeapSort';
 
 export default class SortingVisualizer extends React.Component {
     constructor(props) {
@@ -22,7 +23,7 @@ export default class SortingVisualizer extends React.Component {
     resetArray() {
         const array = [];
         for(let i = 0; i < 100; i++) {
-            array.push(randomIntFromInterval(5, 800));
+            array.push(randomIntFromInterval(5, 600));
         }
         this.setState({array});
     }
@@ -125,6 +126,40 @@ export default class SortingVisualizer extends React.Component {
     }
 
     quickSort() {
+        const animations = getQuickSortAnimations(this.state.array);
+        for(let i = 0; i < animations.length; i++) {
+            const arrayBars = document.getElementsByClassName('array-bar');
+            const isColorChange = i % 3 !== 2;
+            if(isColorChange) {
+                const [firstIndex, secondIndex, pivotIndex] = animations[i];
+                const firstStyle = arrayBars[firstIndex].style;
+                const secondStyle = arrayBars[secondIndex].style;
+                const pivotStyle = arrayBars[pivotIndex].style;
+                const color = i % 3 === 0 ? 'red' : '#673ab7';
+                const pivotColor = secondIndex !== pivotIndex ? 'green' : '#673ab7';
+                setTimeout(() => {
+                    firstStyle.backgroundColor = color;
+                    secondStyle.backgroundColor = color;
+                    pivotStyle.backgroundColor = pivotColor; // TODO Passer la couleur du pivot en Rouge quand on le compare
+                }, i * 10)
+            } 
+            else {
+                setTimeout(() => {
+                    const [[firstIndex, newHeight], [secondIndex, newHeight2]] = animations[i];
+                    const firstStyle = arrayBars[firstIndex].style;
+                    const secondStyle = arrayBars[secondIndex].style;
+                    firstStyle.height = `${newHeight}px`;
+                    secondStyle.height = `${newHeight2}px`;
+                }, i * 10)
+            }
+        }
+
+        // const array = getQuickSortAnimations(this.state.array);
+        // console.log(array);
+        // this.setState({array});
+    }
+
+    heapSort() {
         const array = getQuickSortAnimations(this.state.array);
         console.log(array);
         this.setState({array});
@@ -143,6 +178,7 @@ export default class SortingVisualizer extends React.Component {
                         {/* <li><button onClick={() => this.mergeSort()}>Heap Sort</button></li> */}
                         <li><button onClick={() => this.bubbleSort()}>Bubble Sort</button></li>
                         <li><button onClick={() => this.insertionSort()}>Insertion Sort</button></li>
+                        <li><button onClick={() => this.heapSort()}>Heap Sort</button></li>
                     </ul>
                 </div>
                 <div className="array-container">

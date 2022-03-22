@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import SortingVisualizer from '/home/shad/sort-visualizer/my-app/src/SortingVisualizer/SortingVisualizer.js';
-import NavBar from '/home/shad/sort-visualizer/my-app/src/NavBar/NavBar.js'
+import SortingVisualizer from '/home/shad/TUTO/sort-visualizer-real/my-app/sort-visualizer/sort-visualizer/src/SortingVisualizer/SortingVisualizer.js';
+import NavBar from '/home/shad/TUTO/sort-visualizer-real/my-app/sort-visualizer/sort-visualizer/src/NavBar/NavBar.js'
 
 
 function App() {
